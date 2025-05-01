@@ -1,11 +1,7 @@
-from django.urls import path, include 
-from rest_framework.routers import DefaultRouter
-from .views import WorkoutViewSet
-
-router = DefaultRouter()
-router.register(r'workouts', WorkoutViewSet)
+from django.urls import path
+from .views import home, WorkoutList
 
 urlpatterns = [
-    path('', include(router.urls)),
-    
+    path('', home, name='home'),
+    path('workouts/', WorkoutList.as_view(), name='workout-list')
 ]

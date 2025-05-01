@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Tracker</title>
+</head>
+
+
+
+<style>
+    .workout-card {
+        border: 1px solid #ddd;
+        padding: 15px;
+        margin: 10px;
+        border-radius: 5px;
+    }
+</style>
+
+
+
+<body>
+    <h1>Fitness Tracker</h1>
+    
+    <h2>Workouts</h2>
+    {% if workouts %}
+        {% for workout in workouts %} 
+            <div class="workout-card">
+                <h3>{{ workout.title }}</h3>
+                <p>Type: {{ workout.type }}</p>
+                <p>Duration: {{ workout.duration_minutes }} minutes</p>
+                <p>Date: {{ workout.date }}</p>
+                {% if workout.notes %}
+                    <p>Notes: {{ workout.notes }}</p>
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No workouts available.</p>
+    {% endif %}
+</body>
+</html>

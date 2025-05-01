@@ -5,12 +5,12 @@ class Workout(models.Model):
     WORKOUT_TYPES = [
         ('cardio', 'Cardio'),
         ('weight_strength', 'Weight-Strength'),
-        ('calisthenics', 'Calisthenics')
-        ('stretching', 'Stertching'),
+        ('calisthenics', 'Calisthenics'),
+        ('stretching', 'Stretching'),
     ]
 
     title = models.CharField(max_length=255)
-    workout_type = models.CharField(max_length=20,choices=WORKOUT_TYPES)
+    type = models.CharField(max_length=20,choices=WORKOUT_TYPES)
     duration_minutes = models.PositiveIntegerField()
     date = models.DateField(auto_now_add=True)
     notes = models.TextField(blank=True)

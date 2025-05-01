@@ -6,8 +6,12 @@ from .models import Workout
 
 from .serializers import WorkoutSerializer
 
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 
+
+def home(request):
+    workouts = Workout.objects.all()
+    return render(request, 'home.html', {'workouts': workouts})
 
 class WorkoutList(APIView):
     def get(self, request):
