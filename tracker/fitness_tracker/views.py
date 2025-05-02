@@ -1,29 +1,26 @@
-from rest_framework.views import APIView
-from rest_framework.response import Response
+from rest_framework  import viewsets
 from rest_framework import status
-
 from .models import Workout
 
 from .serializers import WorkoutSerializer
+from .forms import WorkoutForm
 
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import redirect, render
 
 
 def home(request):
     workouts = Workout.objects.all()
     return render(request, 'home.html', {'workouts': workouts})
 
-class WorkoutList(APIView):
-    def get(self, request):
-        workouts = Workout.objects.all()
-        serializer = WorkoutSerializer(workouts, many=True)
-        return Response(serializer.data)
-    
-    def post(self,request):
-        serializer = WorkoutSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+def add_workout(request):
+    if request.method == 'POST':
+        form = WorkoutForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+        else:
+            form = WorkoutForm
+        return render(request, 'add_workout.html', {'form': form})
+
     
     
