@@ -4,7 +4,7 @@ from django.db import models
 class Workout(models.Model):
     WORKOUT_TYPES = [
         ('cardio', 'Cardio'),
-        ('weight strength', 'Weight Strength'),
+        ('strenght', 'Strenght'),
         ('calisthenics', 'Calisthenics'),
         ('stretching', 'Stretching'),
     ]

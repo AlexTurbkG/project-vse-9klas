@@ -5,8 +5,14 @@ from .models import Workout
 from .serializers import WorkoutSerializer
 from .forms import WorkoutForm
 
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 
+class WorkoutViewSet(viewsets.ModelViewSet):
+    queryset = Workout.objects.all()
+    serializer_class = WorkoutSerializer
+
+    def get_queryset(self):
+        return Workout.objects.all()
 
 def home(request):
     workouts = Workout.objects.all()
@@ -18,9 +24,16 @@ def add_workout(request):
         if form.is_valid():
             form.save()
             return redirect('home')
-        else:
-            form = WorkoutForm
-        return render(request, 'add_workout.html', {'form': form})
+    else:
+        form = WorkoutForm()
+    return render(request, 'add_workout.html', {'form': form})
+
+def del_workout(request, workout_id):
+    workout = get_object_or_404(Workout, id=workout_id)
+    if request.method == 'POST':
+        workout.delete()
+        return redirect('home')
+    return render(request, 'confirm_delete.html', {'workout': workout})
 
     
     
