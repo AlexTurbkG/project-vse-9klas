@@ -35,5 +35,15 @@ def del_workout(request, workout_id):
         return redirect('home')
     return render(request, 'confirm_delete.html', {'workout': workout})
 
+def edit_workout(request, workout_id):
+    workout = get_object_or_404(Workout, id=workout_id)
+    if request.method == 'POST':
+        form = WorkoutForm(request.POST, instance=workout)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = WorkoutForm(instance=workout)
+    return render(request, 'edit_workout.html', {'form':form, 'workout':workout})
     
     
