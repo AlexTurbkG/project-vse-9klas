@@ -1,0 +1,33 @@
+body{
+    background-color: var(--background-clr);
+}
+
+
+
+
+.workout-card {
+    border: none;
+    box-shadow: 0px 0px 3px rgb(0,0,0,0.3);
+    padding: 15px;
+    margin: 10px;
+    border-radius: 5px;
+}
+
+.notes{
+    max-width: 100%;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+}
+
+
+.workout-container{
+    display:grid;
+    grid-template-columns: 45% 45%;
+    
+    gap:5%;
+}
+
+.workout-container h2{
+    grid-area:0 0;
+}
