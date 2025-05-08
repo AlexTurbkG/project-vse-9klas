@@ -45,5 +45,5 @@ def edit_workout(request, workout_id):
     else:
         form = WorkoutForm(instance=workout)
     return render(request, 'edit_workout.html', {'form':form, 'workout':workout})
-    
+ 
     
