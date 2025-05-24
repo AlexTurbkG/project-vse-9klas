@@ -1,0 +1,88 @@
+{% load add_class %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Workout Detail</title>
+    <style>
+        .exercise-list {
+            margin: 20px 0;
+        }
+        .exercise-item {
+            padding: 10px;
+            border: 1px solid #ddd;
+            margin: 5px 0;
+            border-radius: 5px;
+        }
+        .add-exercise-form {
+            margin-top: 20px;
+        }
+
+        .exercise-form {
+            margin: 15px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .exercise-select {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        .reps-input, .weight-input {
+            width: 100px;
+            padding: 8px;
+            margin: 5px 0;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        .submit-btn {
+            background-color: rgb(103, 103, 255);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .submit-btn:hover {
+            background-color: rgb(83, 83, 235);
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ workout.title }}</h1>
+    <p>Type: {{ workout.type }}</p>
+    <p>Duration: {{ workout.duration_minutes }} minutes</p>
+    <p>Date: {{ workout.date }}</p>
+
+    <h2>Exercises</h2>
+    <div class="exercise-list">
+        {% for workout_exercise in workout.workout_exercises.all %}
+        <div class="exercise-item">
+            <p><strong>{{ workout_exercise.exercise.name }}</strong></p>
+            {% if workout_exercise.reps %}
+                <p>Reps: {{ workout_exercise.reps }}</p>
+            {% endif %}
+            {% if workout_exercise.weight %}
+                <p>Weight(added): {{ workout_exercise.weight }}kg</p>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    <h2>Add Exercise</h2>
+    <form method="POST" class="add-exercise-form">
+        {% csrf_token %}
+        {{ formset.management_form }}
+        {% for form in formset %}
+            <div class="exercise-form">
+                {{ form.as_p }}
+            </div>
+        {% endfor %}
+        <button type="submit">Add Exercises</button>
+    </form>
+    
+    <a href="{% url 'home' %}">Back to Home</a>
+</body>
+</html>

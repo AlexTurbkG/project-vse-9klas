@@ -1,15 +1,199 @@
-{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fitness Tracker</title>
-    <link rel="stylesheet" href="{% static 'styles/home.css' %}">
+    <style>
+        body{
+    background-color: var(--background-clr);
+}
+
+.del-btn{
+    color: white;
+    background-color: rgb(103, 103, 255);
+    border: 1px solid rgb(103, 103, 255);
+    border-radius: 5px;
+    height: 2.5em;
+    width: 4em;
+    margin-right: 1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.del-btn:hover{
+    background-color: white;
+    color: rgb(103, 103, 255);
+    transform: scale(1.1);
+}
+
+.del-btn:active{
+    transform: scale(0.9);
+}
+
+
+.edit-btn{
+    text-decoration: none;
+    color: rgb(103, 103, 255);
+    border: 1px solid rgb(103, 103, 255);
+    border-radius: 5px;
+    height: 2em;
+    width: 3em;
+    text-align: center;
+    align-content: center;
+    transition: all 0.3s ease;
+}
+
+.edit-btn:hover{
+    background-color: rgb(103, 103, 255);
+    color:white;
+    transform:scale(1.1);
+}
+
+.edit-btn:active{
+    transform: scale(0.9);
+}
+
+
+
+.btn-container{
+    display:flex;
+    align-items: baseline;
+    justify-content: baseline;
+}
+
+.workout-card {
+    display: grid;
+    border: none;
+    box-shadow: 0px 0px 3px rgb(0,0,0,0.3);
+    padding: 15px;
+    margin: 10px;
+    border-radius: 5px;
+}
+
+.notes{
+    max-width: 100%;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+}
+
+
+.workout-container{
+    display:grid;
+    grid-template-columns: 47.5% 47.5%;
+    gap:5%;
+}
+
+.workout-container h2{
+    grid-area:0 0;
+}
+
+
+.add-workout-btn {
+    text-decoration: none;
+    text-align: center;
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background-color: rgb(103, 103, 255);
+    border:1px solid rgb(103, 103, 255);
+    color: white;
+    min-width: 3rem;
+    height: 3rem;
+    border-radius: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    white-space: nowrap;
+    overflow: hidden;
+    padding: 0 1.5rem;
+    transition: all 0.8s ease;
+}
+
+.add-workout-btn:hover {
+    background-color: white;
+    color:rgb(103, 103, 255);
+    transform: scale(1.1);
+}
+
+
+.add-workout-btn:active {
+    transform: scale(0.95);
+}
+
+.add-exercise-btn {
+    text-decoration: none;
+    text-align: center;
+    position: fixed;
+    bottom: 2rem;
+    right: 15rem;  
+    background-color: rgb(103, 103, 255);
+    border: 1px solid rgb(103, 103, 255);
+    color: white;
+    min-width: 3rem;
+    height: 3rem;
+    border-radius: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: all 0.8s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    padding: 0 1.5rem;
+    transition: all 0.8s ease;
+}
+
+.add-exercise-btn:hover{
+    background-color: white;
+    color:rgb(103, 103, 255);
+    transform: scale(1.1);
+}
+
+.add-exercise-btn:active{
+    transform: scale(0.95);
+}
+
+
+
+
+.detail-btn {
+    text-decoration: none;
+    background-color: rgb(103, 103, 255);
+    color: white;
+    border: 1px solid rgb(103, 103, 255);
+    border-radius: 5px;
+    height: 2em;
+    padding: 0em 1em;
+    margin-left: 1em;
+    text-align: center;
+    align-content: center;
+    transition: all 0.4s ease;
+}
+
+.detail-btn:hover {
+    background-color: white;
+    color: rgb(103, 103, 255);  
+    transform: scale(1.1);
+}
+
+.detail-btn:active {
+    transform: scale(0.9);
+}
+    </style>
+    
 </head>
 
 
 <body>
+    
+
+
     <div class="header">
         <h1>Fitness Tracker</h1>
     </div>
@@ -31,6 +215,7 @@
                             <button type="submit" onclick="return confirm('Are you sure you want to delete this workout?')" class="del-btn">Delete</button>
                         </form>
                         <a href="{% url 'edit_workout' workout.id %}" class="edit-btn">Edit</a>
+                        <a href="{% url 'workout_details' workout.id %}" class="detail-btn">See Full Workout</a>
                     </div>
                 </div>
             {% endfor %}
@@ -38,8 +223,9 @@
             <p>No workouts available.</p>
         {% endif %}
     </div>
-    
-    <a href="{% url 'add_workout' %}" class="add-workout-btn" >Add New Workout&#10010</a>
+
+    <a href="{% url 'add_exercise' %}" class="add-exercise-btn">Add New Exercise &#10010;</a>
+    <a href="{% url 'add_workout' %}" class="add-workout-btn" >Add New Workout &#10010</a>
 
 </body>
 </html>
