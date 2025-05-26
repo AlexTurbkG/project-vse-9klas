@@ -8,7 +8,7 @@ class CustomExercise(models.Model):
         ('weightlifting_lower', 'Weightlifting Lower Body'),
     ]
     
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
     category = models.CharField(max_length=20, choices=CATEGORY_TYPES)
     
     def __str__(self):
@@ -65,7 +65,6 @@ class Workout(models.Model):
 
     title = models.CharField(max_length=255)
     type = models.CharField(max_length=20, choices=WORKOUT_TYPES)
-    exercise_type = models.CharField(max_length=20, blank=True, null=True)
     duration_minutes = models.PositiveIntegerField()
     date = models.DateField(auto_now_add=True)
     notes = models.TextField(blank=True)
@@ -75,14 +74,7 @@ class Workout(models.Model):
         related_name='exercise_workouts'
         )
 
-    def clean(self):
-        from django.core.exceptions import ValidationError
-        
-        if self.type == 'cardio' and not self.exercise_type:
-            raise ValidationError('Cardio workout must have an exercise type')
-            
-        if self.type == 'weightlifting' and not self.exercise_type:
-            raise ValidationError('Weightlifting must have a body focus type')
+    
 
     def save(self, *args, **kwargs):
         self.full_clean()

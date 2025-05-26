@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manage Exercises</title>
+    <style>
+        .exercise-list {
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+        .exercise-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .delete-btn {
+            text-decoration: none;
+            background-color: rgb(103, 103, 255);
+            color: white;
+            border: 1px solid rgb(103, 103, 255);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .delete-btn:hover {
+            background-color: white;
+            color: rgb(103, 103, 255);
+            transform: scale(1.1);
+        }
+        .delete-btn:active{
+        transform: scale(0.9);
+        }
+
+        .add-exercises-btn {
+            text-decoration: none;
+            text-align: center;
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;  
+            background-color: rgb(103, 103, 255);
+            border: 1px solid rgb(103, 103, 255);
+            color: white;
+            min-width: 3rem;
+            height: 3rem;
+            border-radius: 1.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: all 0.8s ease;
+            white-space: nowrap;
+            overflow: hidden;
+            padding: 0 1.5rem;
+            transition: all 0.8s ease;
+        }
+
+        .add-exercises-btn:hover{
+            background-color: white;
+            color:rgb(103, 103, 255);
+            transform: scale(1.1);
+        }
+
+        .add-exercises-btn:active{
+            transform: scale(0.95);
+        }
+
+        .home-btn-m{
+            text-decoration: none;
+            text-align: center;
+            position: fixed;
+            bottom: 2rem;
+            right: 13rem;  
+            background-color: rgb(103, 103, 255);
+            border: 1px solid rgb(103, 103, 255);
+            color: white;
+            min-width: 3rem;
+            height: 3rem;
+            border-radius: 1.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: all 0.8s ease;
+            white-space: nowrap;
+            overflow: hidden;
+            padding: 0 1.5rem;
+            transition: all 0.8s ease;
+        }
+
+        .home-btn-m:hover{
+            background-color: white;
+            color:rgb(103, 103, 255);
+            transform: scale(1.1);
+        }
+
+        .home-btn-m:active{
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+<body>
+    <div class="exercise-list">
+        <h2>All Exercises</h2>
+        {% if exercises %}
+            {% for exercise in exercises %}
+                <div class="exercise-item">
+                    <span>{{ exercise.name }} ({{ exercise.get_category_display }})</span>
+                    <a href="{% url 'delete_exercise' exercise.id %}" class="delete-btn">Delete</a>
+                </div>
+            {% endfor %}
+        {% else %}
+        <p>You do not have any custom exercises</p>
+        {% endif %}
+    </div>
+    <a href="{% url 'home' %}" class="home-btn-m">Back to Home</a>
+    <a href="{% url 'add_exercise' %}" class="add-exercises-btn">Add Exercise &#10010;</a>
+</body>
+</html>

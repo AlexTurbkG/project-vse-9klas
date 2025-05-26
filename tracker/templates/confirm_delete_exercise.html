@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Exercise</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 2rem auto;
+            padding: 2rem;
+            text-align: center;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: rgb(103, 103, 255);
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .delete-btn, .cancel-btn {
+            padding: 0.5rem 1.2rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            border: 1px solid rgb(103, 103, 255);
+            text-decoration: none;
+        }
+
+        .delete-btn {
+            background-color: rgb(103, 103, 255);
+            color: white;
+        }
+
+        .delete-btn:hover {
+            background-color: white;
+            color: rgb(103, 103, 255);
+            transform: scale(1.1);
+        }
+
+        .cancel-btn {
+            background-color: white;
+            color: rgb(103, 103, 255);
+        }
+
+        .cancel-btn:hover {
+            background-color: rgb(103, 103, 255);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .delete-btn:active,
+        .cancel-btn:active {
+            transform: scale(0.9);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Delete Exercise</h2>
+        <p>Are you sure you want to delete "{{ exercise.name }}"?</p>
+        <div class="btn-container">
+            <form method="post" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="delete-btn">Delete</button>
+            </form>
+            <a href="{% url 'home' %}" class="cancel-btn">Cancel</a>
+        </div>
+    </div>
+</body>
+</html>

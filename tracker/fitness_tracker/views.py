@@ -7,6 +7,7 @@ from .forms import WorkoutForm, CustomExerciseForm, WorkoutExerciseFormSet
 from django.shortcuts import redirect, render, get_object_or_404
 from django.http import JsonResponse
 from django.contrib import messages
+from django.db import IntegrityError
 
 
 
@@ -14,9 +15,12 @@ def add_exercise(request):
     if request.method == 'POST':
         form = CustomExerciseForm(request.POST)
         if form.is_valid():
-            form.save()
-            messages.success(request, 'Exercise added successfully!')
-            return redirect('home')
+            try:
+                form.save()
+                messages.success(request,'Last exercise was added successfully.')
+                return redirect('home')
+            except IntegrityError:
+                messages.error(request, 'An exercise with this name already exists.')
     else:
         form = CustomExerciseForm()
     return render(request, 'add_exercise.html', {'form': form})
@@ -93,4 +97,14 @@ def workout_details(request, workout_id):
         'formset': formset
     })
 
+def delete_exercise(request, exercise_id):
+    exercise = get_object_or_404(CustomExercise, id=exercise_id)
+    if request.method == 'POST':
+        exercise.delete()
+        messages.success(request, 'Exercise deleted successfully.')
+        return redirect('home')
+    return render(request, 'confirm_delete_exercise.html', {'exercise': exercise})
 
+def manage_exercises(request):
+    exercises = CustomExercise.objects.all().order_by('category', 'name')
+    return render(request, 'manage_exercises.html',{'exercises': exercises})

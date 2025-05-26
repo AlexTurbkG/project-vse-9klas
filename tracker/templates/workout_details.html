@@ -4,85 +4,174 @@
 <head>
     <title>Workout Detail</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0px 3px rgb(103, 103, 255);
+        }
+
+        h1, h2 {
+            color: rgb(103, 103, 255);
+            margin-bottom: 1.5rem;
+        }
+
+        .workout-info {
+            margin-bottom: 2rem;
+            padding: 1rem;
+            border-bottom: 2px solid #eee;
+        }
+
+        .workout-info p {
+            margin: 0.5rem 0;
+            color: #666;
+        }
+
         .exercise-list {
             margin: 20px 0;
         }
+
         .exercise-item {
-            padding: 10px;
+            padding: 15px;
             border: 1px solid #ddd;
-            margin: 5px 0;
-            border-radius: 5px;
+            margin: 10px 0;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+            transition: all 0.3s ease;
         }
+
+        .exercise-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .exercise-item p {
+            margin: 5px 0;
+        }
+
         .add-exercise-form {
-            margin-top: 20px;
+            margin-top: 30px;
+            padding: 20px;
+            border-top: 2px solid #eee;
         }
 
         .exercise-form {
             margin: 15px 0;
-            padding: 15px;
+            padding: 20px;
             border: 1px solid #ddd;
-            border-radius: 5px;
+            border-radius: 8px;
+            background-color: #f8f9fa;
         }
-        .exercise-select {
+
+        .exercise-select, .reps-input, .weight-input {
             width: 100%;
-            padding: 8px;
-            margin: 5px 0;
-            border-radius: 4px;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 5px;
             border: 1px solid #ddd;
+            font-size: 1rem;
         }
-        .reps-input, .weight-input {
-            width: 100px;
-            padding: 8px;
-            margin: 5px 0;
-            border-radius: 4px;
-            border: 1px solid #ddd;
-        }
+
         .submit-btn {
             background-color: rgb(103, 103, 255);
             color: white;
-            padding: 10px 20px;
-            border: none;
+            padding: 12px 24px;
+            border: 1px solid rgb(103, 103, 255);
             border-radius: 5px;
             cursor: pointer;
+            font-size: 1rem;
             transition: all 0.3s ease;
+            margin-top: 1rem;
         }
+
         .submit-btn:hover {
-            background-color: rgb(83, 83, 235);
+            background-color: white;
+            color: rgb(103, 103, 255);
+            transform: scale(1.02);
+        }
+
+        .return-btn {
+            text-decoration: none;
+            text-align: center;
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background-color: rgb(103, 103, 255);
+            border: 1px solid rgb(103, 103, 255);
+            color: white;
+            min-width: 3rem;
+            height: 3rem;
+            border-radius: 1.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            overflow: hidden;
+            padding: 0 1.5rem;
+        }
+
+        .return-btn:hover {
+            background-color: white;
+            color: rgb(103, 103, 255);
+            transform: scale(1.1);
+        }
+
+        .return-btn:active {
+            transform: scale(0.95);
         }
     </style>
 </head>
 <body>
-    <h1>{{ workout.title }}</h1>
-    <p>Type: {{ workout.type }}</p>
-    <p>Duration: {{ workout.duration_minutes }} minutes</p>
-    <p>Date: {{ workout.date }}</p>
-
-    <h2>Exercises</h2>
-    <div class="exercise-list">
-        {% for workout_exercise in workout.workout_exercises.all %}
-        <div class="exercise-item">
-            <p><strong>{{ workout_exercise.exercise.name }}</strong></p>
-            {% if workout_exercise.reps %}
-                <p>Reps: {{ workout_exercise.reps }}</p>
-            {% endif %}
-            {% if workout_exercise.weight %}
-                <p>Weight(added): {{ workout_exercise.weight }}kg</p>
-            {% endif %}
+    <div class="container">
+        <div class="workout-info">
+            <h1>{{ workout.title }}</h1>
+            <p><strong>Type:</strong> {{ workout.type }}</p>
+            <p><strong>Duration:</strong> {{ workout.duration_minutes }} minutes</p>
+            <p><strong>Date:</strong> {{ workout.date }}</p>
         </div>
-        {% endfor %}
-    </div>
-    <h2>Add Exercise</h2>
-    <form method="POST" class="add-exercise-form">
-        {% csrf_token %}
-        {{ formset.management_form }}
-        {% for form in formset %}
-            <div class="exercise-form">
-                {{ form.as_p }}
+
+        <h2>Exercises</h2>
+        <div class="exercise-list">
+            {% for workout_exercise in workout.workout_exercises.all %}
+            <div class="exercise-item">
+                <p><strong>{{ workout_exercise.exercise.name }}</strong></p>
+                {% if workout_exercise.reps %}
+                    <p>Reps: {{ workout_exercise.reps }}</p>
+                {% endif %}
+                {% if workout_exercise.weight %}
+                    <p>Weight: {{ workout_exercise.weight }}kg</p>
+                {% endif %}
             </div>
-        {% endfor %}
-        <button type="submit">Add Exercises</button>
-    </form>
-    
-    <a href="{% url 'home' %}">Back to Home</a>
+            {% endfor %}
+        </div>
+
+        <div class="add-exercise-form">
+            <h2>Add Exercise</h2>
+            <form method="POST">
+                {% csrf_token %}
+                {{ formset.management_form }}
+                {% for form in formset %}
+                    <div class="exercise-form">
+                        {{ form.as_p }}
+                    </div>
+                {% endfor %}
+                <button type="submit" class="submit-btn">Add Exercise</button>
+            </form>
+        </div>
+    </div>
+
+    <a href="{% url 'home' %}" class="return-btn">Back to Home</a>
 </body>
 </html>

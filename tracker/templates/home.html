@@ -6,9 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fitness Tracker</title>
     <style>
-        body{
-    background-color: var(--background-clr);
-}
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
 
 .del-btn{
     color: white;
@@ -66,7 +69,8 @@
 .workout-card {
     display: grid;
     border: none;
-    box-shadow: 0px 0px 3px rgb(0,0,0,0.3);
+    background-color: white;
+    box-shadow: 0px 0px 3px rgba(103, 103, 255);
     padding: 15px;
     margin: 10px;
     border-radius: 5px;
@@ -125,7 +129,7 @@
     transform: scale(0.95);
 }
 
-.add-exercise-btn {
+.manage-exercises-btn {
     text-decoration: none;
     text-align: center;
     position: fixed;
@@ -149,13 +153,13 @@
     transition: all 0.8s ease;
 }
 
-.add-exercise-btn:hover{
+.manage-exercises-btn:hover{
     background-color: white;
     color:rgb(103, 103, 255);
     transform: scale(1.1);
 }
 
-.add-exercise-btn:active{
+.manage-exercises-btn:active{
     transform: scale(0.95);
 }
 
@@ -224,8 +228,8 @@
         {% endif %}
     </div>
 
-    <a href="{% url 'add_exercise' %}" class="add-exercise-btn">Add New Exercise &#10010;</a>
-    <a href="{% url 'add_workout' %}" class="add-workout-btn" >Add New Workout &#10010</a>
+    <a href="{% url 'manage_exercises' %}" class="manage-exercises-btn">Manage Exercises</a>
+    <a href="{% url 'add_workout' %}" class="add-workout-btn" >Add New Workout &#10010;</a>
 
 </body>
 </html>
