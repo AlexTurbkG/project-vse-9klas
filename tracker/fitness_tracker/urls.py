@@ -1,7 +1,7 @@
 from django.urls import path
-from .views import home, add_workout, del_workout, edit_workout, add_exercise, workout_details, delete_exercise, manage_exercises
+from .views import *
 from django.conf import settings
-from django.conf.urls.static import static
+
 
 urlpatterns = [
     path('', home, name='home'),
@@ -12,4 +12,4 @@ urlpatterns = [
     path('workout/<int:workout_id>/', workout_details, name='workout_details'),
     path('delete-exercise/<int:exercise_id>/', delete_exercise, name='delete_exercise'),
     path('manage-exercises/', manage_exercises, name='manage_exercises'),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+]

@@ -32,36 +32,6 @@ class Workout(models.Model):
         ('stretching', 'Stretching'),
     ]
 
-    CARDIO_TYPES = [
-        ('outdoor_running', 'Outdoor Running'),
-        ('indoor_running', 'Indoor Running'),
-        ('rope_jumping', 'Rope Jumping'),
-        ('custom', 'Custom Cardio'),
-    ]
-
-    CALISTHENICS_TYPES = [
-        ('push_ups', 'Push Ups'),
-        ('crunches', 'Crunches'),
-        ('pull_ups', 'Pull Ups'),
-        ('chin_ups', 'Chin Ups'),
-        ('custom', 'Custom Calisthenics'),
-    ]
-
-    WEIGHTLIFTING_TYPES = [
-        ('upper_body', 'Upper Body'),
-        ('lower_body', 'Lower Body'),
-    ]
-
-    UPPER_BODY_EXERCISES = [
-        ('bench_press', 'Bench Press'),
-        ('curls', 'Curls'),
-        ('custom', 'Custom Upper Body'),
-    ]
-
-    LOWER_BODY_EXERCISES = [
-        ('squats', 'Squats'),
-        ('custom', 'Custom Lower Body'),
-    ]
 
     title = models.CharField(max_length=255)
     type = models.CharField(max_length=20, choices=WORKOUT_TYPES)
